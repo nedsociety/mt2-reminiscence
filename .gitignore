@@ -1,0 +1,27 @@
+# Local Unity extracts / decompiles (regenerate inside the container)
+.extract/
+
+# .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# PyInstaller output for the Windows extractor
+tools/extractor/build/
+tools/extractor/dist/
+tools/extractor/*.spec
+
+# Default extractor cache when run from the repo root
+reminiscence-music/
+
+# OS / editor
+.DS_Store
+*.swp

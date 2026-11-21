@@ -1,0 +1,1075 @@
+{
+  "version": 1,
+    "playback": {
+    "loop": "CoreAudioSystem sets AudioSource.loop on every music clip. No music FSB5 header contains a LOOP chunk, so each loop window is the whole clip, from sample 0 through the sample count.",
+    "layers": "Field tracks start a distinct base clip and high clip on the same frame, then crossfade by transitioning the BattleMusic mixer to the Base or High snapshot. Boss tracks assign one clip to both mixer groups and define no snapshots.",
+    "lengthDeltaSamples": "Longest layer sample count minus shortest, when every layer shares a sample rate. Null when they do not."
+  },
+  "source": {
+    "assets": {
+      "file": "sharedassets0.assets",
+      "bytes": 69351736,
+      "sha256": "2df68f92fe329e562a9d5f763b917f77efb75c9812bc19d843407d07a6bc421a"
+    },
+    "resource": {
+      "file": "sharedassets0.resource",
+      "bytes": 104903072,
+      "sha256": "f37f5494872fd70f3aca93e21cef067dbded857ae97107382026a7523acafd50"
+    },
+    "localization": {
+      "file": "resources.assets",
+      "bytes": 10607260,
+      "sha256": "14b4eadaba8e1bfdade7868d347d9718870f61f1aba1034e8d8631342a4c693a"
+    }
+  },
+  "tracks": [
+    {
+      "musicId": "BattleMusic_Original",
+      "name": "Warmongers",
+      "nameTerm": "BattleMusic_Original_Name",
+      "sameClipOnEveryLayer": false,
+      "layersShareLength": true,
+      "lengthDeltaSamples": 0,
+      "snapshots": [
+        {
+          "name": "Base",
+          "asset": "Base",
+          "transitionSeconds": 1.0
+        },
+        {
+          "name": "High",
+          "asset": "High Intensity",
+          "transitionSeconds": 0.25
+        }
+      ],
+      "layers": [
+        {
+          "id": "base",
+          "mixerGroup": "Base",
+          "asset": "1_Base Layer",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 4576859,
+          "durationSeconds": 103.78365079365079,
+          "loop": {
+            "startSample": 0,
+            "endSample": 4576859,
+            "startSeconds": 0.0,
+            "endSeconds": 103.78365079365079
+          },
+          "fsbLoopChunk": false
+        },
+        {
+          "id": "high",
+          "mixerGroup": "High",
+          "asset": "2_High Itensity",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 4576859,
+          "durationSeconds": 103.78365079365079,
+          "loop": {
+            "startSample": 0,
+            "endSample": 4576859,
+            "startSeconds": 0.0,
+            "endSeconds": 103.78365079365079
+          },
+          "fsbLoopChunk": false
+        }
+      ],
+      "sampleRate": 44100,
+      "channels": 2,
+      "samples": 4576859,
+      "durationSeconds": 103.78365079365079,
+      "loop": {
+        "startSample": 0,
+        "endSample": 4576859,
+        "startSeconds": 0.0,
+        "endSeconds": 103.78365079365079
+      }
+    },
+    {
+      "musicId": "CharacterSelect",
+      "name": null,
+      "nameTerm": null,
+      "sameClipOnEveryLayer": true,
+      "layersShareLength": true,
+      "lengthDeltaSamples": 0,
+      "snapshots": [],
+      "layers": [
+        {
+          "id": "CharacterSelect",
+          "mixerGroup": "Master",
+          "asset": "CharacterSelect",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 2574550,
+          "durationSeconds": 58.37981859410431,
+          "loop": {
+            "startSample": 0,
+            "endSample": 2574550,
+            "startSeconds": 0.0,
+            "endSeconds": 58.37981859410431
+          },
+          "fsbLoopChunk": false
+        }
+      ],
+      "sampleRate": 44100,
+      "channels": 2,
+      "samples": 2574550,
+      "durationSeconds": 58.37981859410431,
+      "loop": {
+        "startSample": 0,
+        "endSample": 2574550,
+        "startSeconds": 0.0,
+        "endSeconds": 58.37981859410431
+      }
+    },
+    {
+      "musicId": "Wind",
+      "name": null,
+      "nameTerm": null,
+      "sameClipOnEveryLayer": true,
+      "layersShareLength": true,
+      "lengthDeltaSamples": 0,
+      "snapshots": [],
+      "layers": [
+        {
+          "id": "Menu Wind SFX",
+          "mixerGroup": "Master",
+          "asset": "Menu Wind SFX",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 2035385,
+          "durationSeconds": 46.15385487528345,
+          "loop": {
+            "startSample": 0,
+            "endSample": 2035385,
+            "startSeconds": 0.0,
+            "endSeconds": 46.15385487528345
+          },
+          "fsbLoopChunk": false
+        }
+      ],
+      "sampleRate": 44100,
+      "channels": 2,
+      "samples": 2035385,
+      "durationSeconds": 46.15385487528345,
+      "loop": {
+        "startSample": 0,
+        "endSample": 2035385,
+        "startSeconds": 0.0,
+        "endSeconds": 46.15385487528345
+      }
+    },
+    {
+      "musicId": "BattleMusic_Wildwood",
+      "name": "Call of the Wildwood",
+      "nameTerm": "BattleMusic_Wildwood_Name",
+      "sameClipOnEveryLayer": false,
+      "layersShareLength": true,
+      "lengthDeltaSamples": 0,
+      "snapshots": [
+        {
+          "name": "Base",
+          "asset": "Base",
+          "transitionSeconds": 1.0
+        },
+        {
+          "name": "High",
+          "asset": "High Intensity",
+          "transitionSeconds": 0.0
+        }
+      ],
+      "layers": [
+        {
+          "id": "base",
+          "mixerGroup": "Base",
+          "asset": "Battle_Wildwood",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 4456432,
+          "durationSeconds": 101.0528798185941,
+          "loop": {
+            "startSample": 0,
+            "endSample": 4456432,
+            "startSeconds": 0.0,
+            "endSeconds": 101.0528798185941
+          },
+          "fsbLoopChunk": false
+        },
+        {
+          "id": "high",
+          "mixerGroup": "High",
+          "asset": "Battle_Wildwood_High",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 4456432,
+          "durationSeconds": 101.0528798185941,
+          "loop": {
+            "startSample": 0,
+            "endSample": 4456432,
+            "startSeconds": 0.0,
+            "endSeconds": 101.0528798185941
+          },
+          "fsbLoopChunk": false
+        }
+      ],
+      "sampleRate": 44100,
+      "channels": 2,
+      "samples": 4456432,
+      "durationSeconds": 101.0528798185941,
+      "loop": {
+        "startSample": 0,
+        "endSample": 4456432,
+        "startSeconds": 0.0,
+        "endSeconds": 101.0528798185941
+      }
+    },
+    {
+      "musicId": "BattleMusic_WaxenArches",
+      "name": "Remnant Waltz",
+      "nameTerm": "BattleMusic_WaxenArches_Name",
+      "sameClipOnEveryLayer": false,
+      "layersShareLength": true,
+      "lengthDeltaSamples": 0,
+      "snapshots": [
+        {
+          "name": "Base",
+          "asset": "Base",
+          "transitionSeconds": 1.0
+        },
+        {
+          "name": "High",
+          "asset": "High Intensity",
+          "transitionSeconds": 0.0
+        }
+      ],
+      "layers": [
+        {
+          "id": "base",
+          "mixerGroup": "Base",
+          "asset": "Battle_WaxArches",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 3919387,
+          "durationSeconds": 88.87498866213151,
+          "loop": {
+            "startSample": 0,
+            "endSample": 3919387,
+            "startSeconds": 0.0,
+            "endSeconds": 88.87498866213151
+          },
+          "fsbLoopChunk": false
+        },
+        {
+          "id": "high",
+          "mixerGroup": "High",
+          "asset": "Battle_WaxArches_High",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 3919387,
+          "durationSeconds": 88.87498866213151,
+          "loop": {
+            "startSample": 0,
+            "endSample": 3919387,
+            "startSeconds": 0.0,
+            "endSeconds": 88.87498866213151
+          },
+          "fsbLoopChunk": false
+        }
+      ],
+      "sampleRate": 44100,
+      "channels": 2,
+      "samples": 3919387,
+      "durationSeconds": 88.87498866213151,
+      "loop": {
+        "startSample": 0,
+        "endSample": 3919387,
+        "startSeconds": 0.0,
+        "endSeconds": 88.87498866213151
+      }
+    },
+    {
+      "musicId": "BattleMusic_Bogwurm",
+      "name": "Lost to the Bogs",
+      "nameTerm": "BattleMusic_Bogwurm_Name",
+      "sameClipOnEveryLayer": false,
+      "layersShareLength": true,
+      "lengthDeltaSamples": 0,
+      "snapshots": [
+        {
+          "name": "Base",
+          "asset": "Base",
+          "transitionSeconds": 1.0
+        },
+        {
+          "name": "High",
+          "asset": "High Intensity",
+          "transitionSeconds": 0.0
+        }
+      ],
+      "layers": [
+        {
+          "id": "base",
+          "mixerGroup": "Base",
+          "asset": "Battle_Bogwurm",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 4089215,
+          "durationSeconds": 92.72596371882086,
+          "loop": {
+            "startSample": 0,
+            "endSample": 4089215,
+            "startSeconds": 0.0,
+            "endSeconds": 92.72596371882086
+          },
+          "fsbLoopChunk": false
+        },
+        {
+          "id": "high",
+          "mixerGroup": "High",
+          "asset": "Battle_Bogwurm_High",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 4089215,
+          "durationSeconds": 92.72596371882086,
+          "loop": {
+            "startSample": 0,
+            "endSample": 4089215,
+            "startSeconds": 0.0,
+            "endSeconds": 92.72596371882086
+          },
+          "fsbLoopChunk": false
+        }
+      ],
+      "sampleRate": 44100,
+      "channels": 2,
+      "samples": 4089215,
+      "durationSeconds": 92.72596371882086,
+      "loop": {
+        "startSample": 0,
+        "endSample": 4089215,
+        "startSeconds": 0.0,
+        "endSeconds": 92.72596371882086
+      }
+    },
+    {
+      "musicId": "BattleMusic_StyxSea",
+      "name": "Crossing the Styx",
+      "nameTerm": "BattleMusic_StyxSea",
+      "sameClipOnEveryLayer": false,
+      "layersShareLength": false,
+      "lengthDeltaSamples": 212,
+      "snapshots": [
+        {
+          "name": "Base",
+          "asset": "Base",
+          "transitionSeconds": 1.0
+        },
+        {
+          "name": "High",
+          "asset": "High Intensity",
+          "transitionSeconds": 0.0
+        }
+      ],
+      "layers": [
+        {
+          "id": "base",
+          "mixerGroup": "Base",
+          "asset": "Battle_StyxSea",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 4384770,
+          "durationSeconds": 99.42789115646258,
+          "loop": {
+            "startSample": 0,
+            "endSample": 4384770,
+            "startSeconds": 0.0,
+            "endSeconds": 99.42789115646258
+          },
+          "fsbLoopChunk": false
+        },
+        {
+          "id": "high",
+          "mixerGroup": "High",
+          "asset": "Battle_Styx_High",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 4384982,
+          "durationSeconds": 99.43269841269841,
+          "loop": {
+            "startSample": 0,
+            "endSample": 4384982,
+            "startSeconds": 0.0,
+            "endSeconds": 99.43269841269841
+          },
+          "fsbLoopChunk": false
+        }
+      ]
+    },
+    {
+      "musicId": "BattleMusic_FallenLords",
+      "name": "Fallen Lords",
+      "nameTerm": "BattleMusic_FallenLords",
+      "sameClipOnEveryLayer": false,
+      "layersShareLength": true,
+      "lengthDeltaSamples": 0,
+      "snapshots": [
+        {
+          "name": "Base",
+          "asset": "Base",
+          "transitionSeconds": 1.0
+        },
+        {
+          "name": "High",
+          "asset": "High Intensity",
+          "transitionSeconds": 0.0
+        }
+      ],
+      "layers": [
+        {
+          "id": "base",
+          "mixerGroup": "Base",
+          "asset": "Battle_FallenLords",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 3908150,
+          "durationSeconds": 88.62018140589569,
+          "loop": {
+            "startSample": 0,
+            "endSample": 3908150,
+            "startSeconds": 0.0,
+            "endSeconds": 88.62018140589569
+          },
+          "fsbLoopChunk": false
+        },
+        {
+          "id": "high",
+          "mixerGroup": "High",
+          "asset": "Battle_FallenLords_High",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 3908150,
+          "durationSeconds": 88.62018140589569,
+          "loop": {
+            "startSample": 0,
+            "endSample": 3908150,
+            "startSeconds": 0.0,
+            "endSeconds": 88.62018140589569
+          },
+          "fsbLoopChunk": false
+        }
+      ],
+      "sampleRate": 44100,
+      "channels": 2,
+      "samples": 3908150,
+      "durationSeconds": 88.62018140589569,
+      "loop": {
+        "startSample": 0,
+        "endSample": 3908150,
+        "startSeconds": 0.0,
+        "endSeconds": 88.62018140589569
+      }
+    },
+    {
+      "musicId": "BattleMusic_Limbo",
+      "name": "Initial Descent",
+      "nameTerm": "BattleMusic_Limbo",
+      "sameClipOnEveryLayer": false,
+      "layersShareLength": true,
+      "lengthDeltaSamples": 0,
+      "snapshots": [
+        {
+          "name": "Base",
+          "asset": "Base",
+          "transitionSeconds": 1.0
+        },
+        {
+          "name": "High",
+          "asset": "High Intensity",
+          "transitionSeconds": 0.0
+        }
+      ],
+      "layers": [
+        {
+          "id": "base",
+          "mixerGroup": "Base",
+          "asset": "Battle_Limbo",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 3135976,
+          "durationSeconds": 71.11056689342404,
+          "loop": {
+            "startSample": 0,
+            "endSample": 3135976,
+            "startSeconds": 0.0,
+            "endSeconds": 71.11056689342404
+          },
+          "fsbLoopChunk": false
+        },
+        {
+          "id": "high",
+          "mixerGroup": "High",
+          "asset": "Battle_Limbo_High",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 3135976,
+          "durationSeconds": 71.11056689342404,
+          "loop": {
+            "startSample": 0,
+            "endSample": 3135976,
+            "startSeconds": 0.0,
+            "endSeconds": 71.11056689342404
+          },
+          "fsbLoopChunk": false
+        }
+      ],
+      "sampleRate": 44100,
+      "channels": 2,
+      "samples": 3135976,
+      "durationSeconds": 71.11056689342404,
+      "loop": {
+        "startSample": 0,
+        "endSample": 3135976,
+        "startSeconds": 0.0,
+        "endSeconds": 71.11056689342404
+      }
+    },
+    {
+      "musicId": "Overworld",
+      "name": null,
+      "nameTerm": null,
+      "sameClipOnEveryLayer": false,
+      "layersShareLength": false,
+      "lengthDeltaSamples": null,
+      "snapshots": [
+        {
+          "name": "Map",
+          "asset": "Map",
+          "transitionSeconds": 0.0
+        },
+        {
+          "name": "Forge",
+          "asset": "Forge",
+          "transitionSeconds": 0.0
+        },
+        {
+          "name": "Event",
+          "asset": "Event",
+          "transitionSeconds": 0.0
+        },
+        {
+          "name": "Temple",
+          "asset": "Temple",
+          "transitionSeconds": 0.0
+        },
+        {
+          "name": "Merchant",
+          "asset": "Merchant",
+          "transitionSeconds": 0.0
+        }
+      ],
+      "layers": [
+        {
+          "id": "map",
+          "mixerGroup": "Map",
+          "asset": "Overworld_Map",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 4233600,
+          "durationSeconds": 96.0,
+          "loop": {
+            "startSample": 0,
+            "endSample": 4233600,
+            "startSeconds": 0.0,
+            "endSeconds": 96.0
+          },
+          "fsbLoopChunk": false
+        },
+        {
+          "id": "forge",
+          "mixerGroup": "Forge",
+          "asset": "Overworld_Forge",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 4233600,
+          "durationSeconds": 96.0,
+          "loop": {
+            "startSample": 0,
+            "endSample": 4233600,
+            "startSeconds": 0.0,
+            "endSeconds": 96.0
+          },
+          "fsbLoopChunk": false
+        },
+        {
+          "id": "event",
+          "mixerGroup": "Event",
+          "asset": "Ambience_Cavern",
+          "sampleRate": 32000,
+          "channels": 2,
+          "samples": 1691076,
+          "durationSeconds": 52.846125,
+          "loop": {
+            "startSample": 0,
+            "endSample": 1691076,
+            "startSeconds": 0.0,
+            "endSeconds": 52.846125
+          },
+          "fsbLoopChunk": false
+        },
+        {
+          "id": "temple",
+          "mixerGroup": "Temple",
+          "asset": "Ambience_Temple",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 1499188,
+          "durationSeconds": 33.99519274376417,
+          "loop": {
+            "startSample": 0,
+            "endSample": 1499188,
+            "startSeconds": 0.0,
+            "endSeconds": 33.99519274376417
+          },
+          "fsbLoopChunk": false
+        },
+        {
+          "id": "merchant",
+          "mixerGroup": "Merchant",
+          "asset": "Overworld_Merchant",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 4233600,
+          "durationSeconds": 96.0,
+          "loop": {
+            "startSample": 0,
+            "endSample": 4233600,
+            "startSeconds": 0.0,
+            "endSeconds": 96.0
+          },
+          "fsbLoopChunk": false
+        }
+      ]
+    },
+    {
+      "musicId": "Spoils",
+      "name": null,
+      "nameTerm": null,
+      "sameClipOnEveryLayer": true,
+      "layersShareLength": true,
+      "lengthDeltaSamples": 0,
+      "snapshots": [],
+      "layers": [
+        {
+          "id": "Spoils",
+          "mixerGroup": "Master",
+          "asset": "Spoils",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 1953969,
+          "durationSeconds": 44.30768707482993,
+          "loop": {
+            "startSample": 0,
+            "endSample": 1953969,
+            "startSeconds": 0.0,
+            "endSeconds": 44.30768707482993
+          },
+          "fsbLoopChunk": false
+        }
+      ],
+      "sampleRate": 44100,
+      "channels": 2,
+      "samples": 1953969,
+      "durationSeconds": 44.30768707482993,
+      "loop": {
+        "startSample": 0,
+        "endSample": 1953969,
+        "startSeconds": 0.0,
+        "endSeconds": 44.30768707482993
+      }
+    },
+    {
+      "musicId": "BattleMusic_Crucible",
+      "name": "Simple Machines",
+      "nameTerm": "BattleMusic_Crucible_Name",
+      "sameClipOnEveryLayer": false,
+      "layersShareLength": true,
+      "lengthDeltaSamples": 0,
+      "snapshots": [
+        {
+          "name": "Base",
+          "asset": "Base",
+          "transitionSeconds": 1.0
+        },
+        {
+          "name": "High",
+          "asset": "High Intensity",
+          "transitionSeconds": 0.0
+        }
+      ],
+      "layers": [
+        {
+          "id": "base",
+          "mixerGroup": "Base",
+          "asset": "Battle_Crucible",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 3931473,
+          "durationSeconds": 89.14904761904762,
+          "loop": {
+            "startSample": 0,
+            "endSample": 3931473,
+            "startSeconds": 0.0,
+            "endSeconds": 89.14904761904762
+          },
+          "fsbLoopChunk": false
+        },
+        {
+          "id": "high",
+          "mixerGroup": "High",
+          "asset": "Battle_Crucible_High",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 3931473,
+          "durationSeconds": 89.14904761904762,
+          "loop": {
+            "startSample": 0,
+            "endSample": 3931473,
+            "startSeconds": 0.0,
+            "endSeconds": 89.14904761904762
+          },
+          "fsbLoopChunk": false
+        }
+      ],
+      "sampleRate": 44100,
+      "channels": 2,
+      "samples": 3931473,
+      "durationSeconds": 89.14904761904762,
+      "loop": {
+        "startSample": 0,
+        "endSample": 3931473,
+        "startSeconds": 0.0,
+        "endSeconds": 89.14904761904762
+      }
+    },
+    {
+      "musicId": "BattleMusic_Daedalus",
+      "name": "Daedalus, the Professor",
+      "nameTerm": "BattleMusic_Daedalus_Name",
+      "sameClipOnEveryLayer": true,
+      "layersShareLength": true,
+      "lengthDeltaSamples": 0,
+      "snapshots": [],
+      "layers": [
+        {
+          "id": "base",
+          "mixerGroup": "Base",
+          "asset": "BossBattle_Daedalus",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 5976822,
+          "durationSeconds": 135.52884353741496,
+          "loop": {
+            "startSample": 0,
+            "endSample": 5976822,
+            "startSeconds": 0.0,
+            "endSeconds": 135.52884353741496
+          },
+          "fsbLoopChunk": false
+        },
+        {
+          "id": "high",
+          "mixerGroup": "High",
+          "asset": "BossBattle_Daedalus",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 5976822,
+          "durationSeconds": 135.52884353741496,
+          "loop": {
+            "startSample": 0,
+            "endSample": 5976822,
+            "startSeconds": 0.0,
+            "endSeconds": 135.52884353741496
+          },
+          "fsbLoopChunk": false
+        }
+      ],
+      "sampleRate": 44100,
+      "channels": 2,
+      "samples": 5976822,
+      "durationSeconds": 135.52884353741496,
+      "loop": {
+        "startSample": 0,
+        "endSample": 5976822,
+        "startSeconds": 0.0,
+        "endSeconds": 135.52884353741496
+      }
+    },
+    {
+      "musicId": "BattleMusic_Fel",
+      "name": "Fel, the Wings of Light",
+      "nameTerm": "BattleMusic_Fel_Name",
+      "sameClipOnEveryLayer": true,
+      "layersShareLength": true,
+      "lengthDeltaSamples": 0,
+      "snapshots": [],
+      "layers": [
+        {
+          "id": "base",
+          "mixerGroup": "Base",
+          "asset": "BossBattle_Fel",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 4566258,
+          "durationSeconds": 103.54326530612245,
+          "loop": {
+            "startSample": 0,
+            "endSample": 4566258,
+            "startSeconds": 0.0,
+            "endSeconds": 103.54326530612245
+          },
+          "fsbLoopChunk": false
+        },
+        {
+          "id": "high",
+          "mixerGroup": "High",
+          "asset": "BossBattle_Fel",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 4566258,
+          "durationSeconds": 103.54326530612245,
+          "loop": {
+            "startSample": 0,
+            "endSample": 4566258,
+            "startSeconds": 0.0,
+            "endSeconds": 103.54326530612245
+          },
+          "fsbLoopChunk": false
+        }
+      ],
+      "sampleRate": 44100,
+      "channels": 2,
+      "samples": 4566258,
+      "durationSeconds": 103.54326530612245,
+      "loop": {
+        "startSample": 0,
+        "endSample": 4566258,
+        "startSeconds": 0.0,
+        "endSeconds": 103.54326530612245
+      }
+    },
+    {
+      "musicId": "BattleMusic_Seraph",
+      "name": "Seraph the Traitor",
+      "nameTerm": "BattleMusic_Seraph_Name",
+      "sameClipOnEveryLayer": true,
+      "layersShareLength": true,
+      "lengthDeltaSamples": 0,
+      "snapshots": [],
+      "layers": [
+        {
+          "id": "base",
+          "mixerGroup": "Base",
+          "asset": "BossBattle_Seraph",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 6768714,
+          "durationSeconds": 153.48557823129252,
+          "loop": {
+            "startSample": 0,
+            "endSample": 6768714,
+            "startSeconds": 0.0,
+            "endSeconds": 153.48557823129252
+          },
+          "fsbLoopChunk": false
+        },
+        {
+          "id": "high",
+          "mixerGroup": "High",
+          "asset": "BossBattle_Seraph",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 6768714,
+          "durationSeconds": 153.48557823129252,
+          "loop": {
+            "startSample": 0,
+            "endSample": 6768714,
+            "startSeconds": 0.0,
+            "endSeconds": 153.48557823129252
+          },
+          "fsbLoopChunk": false
+        }
+      ],
+      "sampleRate": 44100,
+      "channels": 2,
+      "samples": 6768714,
+      "durationSeconds": 153.48557823129252,
+      "loop": {
+        "startSample": 0,
+        "endSample": 6768714,
+        "startSeconds": 0.0,
+        "endSeconds": 153.48557823129252
+      }
+    },
+    {
+      "musicId": "BattleMusic_Talos",
+      "name": "Talos, the Architect",
+      "nameTerm": "BattleMusic_Talos_Name",
+      "sameClipOnEveryLayer": true,
+      "layersShareLength": true,
+      "lengthDeltaSamples": 0,
+      "snapshots": [],
+      "layers": [
+        {
+          "id": "base",
+          "mixerGroup": "Base",
+          "asset": "BossBattle_Talos",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 5729959,
+          "durationSeconds": 129.93104308390022,
+          "loop": {
+            "startSample": 0,
+            "endSample": 5729959,
+            "startSeconds": 0.0,
+            "endSeconds": 129.93104308390022
+          },
+          "fsbLoopChunk": false
+        },
+        {
+          "id": "high",
+          "mixerGroup": "High",
+          "asset": "BossBattle_Talos",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 5729959,
+          "durationSeconds": 129.93104308390022,
+          "loop": {
+            "startSample": 0,
+            "endSample": 5729959,
+            "startSeconds": 0.0,
+            "endSeconds": 129.93104308390022
+          },
+          "fsbLoopChunk": false
+        }
+      ],
+      "sampleRate": 44100,
+      "channels": 2,
+      "samples": 5729959,
+      "durationSeconds": 129.93104308390022,
+      "loop": {
+        "startSample": 0,
+        "endSample": 5729959,
+        "startSeconds": 0.0,
+        "endSeconds": 129.93104308390022
+      }
+    },
+    {
+      "musicId": "BattleMusic_Archus",
+      "name": "Archus, Darkness Incarnate",
+      "nameTerm": "BattleMusic_Archus_Name",
+      "sameClipOnEveryLayer": true,
+      "layersShareLength": true,
+      "lengthDeltaSamples": 0,
+      "snapshots": [],
+      "layers": [
+        {
+          "id": "base",
+          "mixerGroup": "Base",
+          "asset": "BossBattle_Archus",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 4010779,
+          "durationSeconds": 90.94736961451247,
+          "loop": {
+            "startSample": 0,
+            "endSample": 4010779,
+            "startSeconds": 0.0,
+            "endSeconds": 90.94736961451247
+          },
+          "fsbLoopChunk": false
+        },
+        {
+          "id": "high",
+          "mixerGroup": "High",
+          "asset": "BossBattle_Archus",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 4010779,
+          "durationSeconds": 90.94736961451247,
+          "loop": {
+            "startSample": 0,
+            "endSample": 4010779,
+            "startSeconds": 0.0,
+            "endSeconds": 90.94736961451247
+          },
+          "fsbLoopChunk": false
+        }
+      ],
+      "sampleRate": 44100,
+      "channels": 2,
+      "samples": 4010779,
+      "durationSeconds": 90.94736961451247,
+      "loop": {
+        "startSample": 0,
+        "endSample": 4010779,
+        "startSeconds": 0.0,
+        "endSeconds": 90.94736961451247
+      }
+    },
+    {
+      "musicId": "BattleMusic_TLD",
+      "name": "The Last Divinity",
+      "nameTerm": "BattleMusic_TLD_Name",
+      "sameClipOnEveryLayer": true,
+      "layersShareLength": true,
+      "lengthDeltaSamples": 0,
+      "snapshots": [],
+      "layers": [
+        {
+          "id": "base",
+          "mixerGroup": "Base",
+          "asset": "BossBattle_TLD",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 8711446,
+          "durationSeconds": 197.53845804988663,
+          "loop": {
+            "startSample": 0,
+            "endSample": 8711446,
+            "startSeconds": 0.0,
+            "endSeconds": 197.53845804988663
+          },
+          "fsbLoopChunk": false
+        },
+        {
+          "id": "high",
+          "mixerGroup": "High",
+          "asset": "BossBattle_TLD",
+          "sampleRate": 44100,
+          "channels": 2,
+          "samples": 8711446,
+          "durationSeconds": 197.53845804988663,
+          "loop": {
+            "startSample": 0,
+            "endSample": 8711446,
+            "startSeconds": 0.0,
+            "endSeconds": 197.53845804988663
+          },
+          "fsbLoopChunk": false
+        }
+      ],
+      "sampleRate": 44100,
+      "channels": 2,
+      "samples": 8711446,
+      "durationSeconds": 197.53845804988663,
+      "loop": {
+        "startSample": 0,
+        "endSample": 8711446,
+        "startSeconds": 0.0,
+        "endSeconds": 197.53845804988663
+      }
+    }
+  ]
+}

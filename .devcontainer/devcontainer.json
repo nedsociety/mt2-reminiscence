@@ -1,0 +1,52 @@
+{
+  "name": "Monster Train: Reminiscence",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "workspaceFolder": "/workspace",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+  "remoteUser": "vscode",
+  "containerEnv": {
+    "STEAM_ROOT": "/mnt/steam",
+    "MT1_ROOT": "/mnt/steam/steamapps/common/Monster Train",
+    "MT2_ROOT": "/mnt/steam/steamapps/common/Monster Train 2",
+    "EXTRACT_ROOT": "/workspace/.extract",
+    "CURSOR_API_KEY": "${localEnv:CURSOR_API_KEY}"
+  },
+  "mounts": [
+    "source=${localEnv:HOME}/.local/share/Steam,target=/mnt/steam,type=bind,consistency=cached"
+  ],
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "forwardPorts": [5000],
+  "portsAttributes": {
+    "5000": {
+      "label": "AssetRipper",
+      "onAutoForward": "notify"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csdevkit",
+        "ms-dotnettools.csharp",
+        "ms-python.python"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "dotnet.defaultSolution": "**/*.sln"
+      }
+    }
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": false,
+      "upgradePackages": false
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:4": {
+      "moby": true,
+      "dockerDashComposeVersion": "none"
+    }
+  }
+}

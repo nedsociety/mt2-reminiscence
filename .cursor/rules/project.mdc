@@ -1,0 +1,58 @@
+---
+description: Project overview for Monster Train: Reminiscence
+alwaysApply: true
+---
+
+# Monster Train: Reminiscence
+
+Monster Train 2 mod that ports Monster Train 1 content into MT2.
+
+## Dependencies
+
+- **Requires both games installed and accessible**: Monster Train 2 (host) and Monster Train 1 (content source).
+- **MT1 path detection**:
+  1. Autodiscover via Steam library paths when possible.
+  2. Otherwise the player sets the MT1 directory in mod config and **restarts the game**.
+
+Do not assume MT1 assets are available until path resolution succeeds. Fail clearly when MT1 cannot be found.
+
+## Content priority (high → low)
+
+Ship and harden in this order; prefer unfinished higher tiers over starting lower ones:
+
+1. **Music**
+2. **Bosses**
+3. **Alcove Events**
+4. **Enemies**
+
+## DLC-gated content (The Last Divinity / TLD)
+
+Only enable when the player has TLD installed:
+
+- **TLD music** (`BattleMusic_TLD`)
+- **Pacts**
+- **Pact Locations** (Divine …)
+- **Alternative Ring 9 Boss** (TLD)
+
+Detect TLD by a file existence check, so Steam and non-Steam installs behave the same. The DLC is present when `MonsterTrain_Data/StreamingAssets/aa/StandaloneWindows64/DLC/DLC_1/` contains a bundle. That directory is the whole TLD depot on Steam. Do not consult the Steam API or app manifests. Non-DLC players must never see or load these assets.
+
+## Devcontainer paths
+
+Work inside the `.devcontainer`. Host Steam is bind-mounted read/write:
+
+| Env | Path |
+|-----|------|
+| `STEAM_ROOT` | `/mnt/steam` |
+| `MT1_ROOT` | `/mnt/steam/steamapps/common/Monster Train` |
+| `MT2_ROOT` | `/mnt/steam/steamapps/common/Monster Train 2` |
+| `EXTRACT_ROOT` | `/workspace/.extract` (gitignored) |
+
+Debug mod drops go in `$MT2_ROOT/BepInEx/plugins` (install loader via `scripts/install-bepinex-mt2.sh`; use **win_x64** BepInEx — Steam Linux runs the Windows build under Proton).
+
+## Runtime / RE notes
+
+- Current Steam builds of **both** MT1 and MT2 are **Unity Mono** (`*_Data/Managed/Assembly-CSharp.dll`). Community mods use **BepInEx 5 Mono** + Trainworks Reloaded.
+- Tooling in the container: `ilspycmd` (code), `UnityPy` + `ffmpeg` (scripted assets/audio), `AssetRipper` (interactive web UI on port 5000; Free build has no batch CLI), `agent` (Cursor CLI).
+- Treat MT1 as a read-only content source at runtime; the mount is writable only so we can install MT2 mods for debugging.
+- Prefer incremental vertical slices per priority tier over broad stubs across tiers.
+- Keep Steam autodiscovery and manual path override both working; config changes that affect asset roots require a restart.
