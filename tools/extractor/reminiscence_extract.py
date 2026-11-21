@@ -1,4 +1,4 @@
-"""Extract Monster Train 1 field music from a local install.
+"""Extract Monster Train 1 field and boss music from a local install.
 
 The Windows build of this tool is frozen with PyInstaller. Monster Train 1
 stores these cues as FSB5 AudioClips, so playback bytes come from the FMOD
@@ -25,7 +25,11 @@ ASSETS_RELATIVE = Path("MonsterTrain_Data") / "sharedassets0.assets"
 RESOURCE_NAME = "sharedassets0.resource"
 LOCALIZATION_RELATIVE = Path("MonsterTrain_Data") / "resources.assets"
 MANIFEST_NAME = "manifest.json"
-MANIFEST_VERSION = 2
+MANIFEST_VERSION = 3
+TLD_DIRECTORY = (
+    Path("MonsterTrain_Data") / "StreamingAssets" / "aa" / "StandaloneWindows64" / "DLC" / "DLC_1"
+)
+TRACK_PREFIX = "Reminiscence/"
 
 FSB_HEADER_SIZE = 60
 FSB_FREQUENCIES = {1: 8000, 2: 11000, 3: 11025, 4: 16000, 5: 22050, 6: 24000, 7: 32000, 8: 44100, 9: 48000}
@@ -44,19 +48,49 @@ class Layer:
 class Piece:
     piece_id: str
     music_id: str
+    role: str
+    high_transition_seconds: float
     layers: tuple[Layer, ...]
 
+    @property
+    def track_id(self) -> str:
+        return f"{TRACK_PREFIX}{self.music_id}"
 
-# Initial Descent is the Limbo ring theme. The ignited layer is Battle_Limbo_High.
-PIECES = (
-    Piece(
-        "initial-descent",
-        "BattleMusic_Limbo",
+
+def field_piece(piece_id: str, music_id: str, base_asset: str, high_asset: str, high_transition_seconds: float = 0.0) -> Piece:
+    return Piece(
+        piece_id,
+        music_id,
+        "field",
+        high_transition_seconds,
         (
-            Layer("base", "Battle_Limbo", "initial-descent"),
-            Layer("ignited", "Battle_Limbo_High", "initial-descent-ignited"),
+            Layer("base", base_asset, piece_id),
+            Layer("high", high_asset, f"{piece_id}-high"),
         ),
-    ),
+    )
+
+
+def boss_piece(piece_id: str, music_id: str, asset_name: str) -> Piece:
+    return Piece(piece_id, music_id, "boss", 0.0, (Layer("base", asset_name, piece_id),))
+
+
+# Field cues join MT2's ring 1/2/4/5/7 pool. Boss cues are the MT1 side of a coin flip.
+# Layer changes are instant. Warmongers' original 0.25s blend mutes because the snapshots are inverses.
+PIECES = (
+    field_piece("warmongers", "BattleMusic_Original", "1_Base Layer", "2_High Itensity"),
+    field_piece("wildwood", "BattleMusic_Wildwood", "Battle_Wildwood", "Battle_Wildwood_High"),
+    field_piece("remnant-waltz", "BattleMusic_WaxenArches", "Battle_WaxArches", "Battle_WaxArches_High"),
+    field_piece("lost-to-the-bogs", "BattleMusic_Bogwurm", "Battle_Bogwurm", "Battle_Bogwurm_High"),
+    field_piece("crossing-the-styx", "BattleMusic_StyxSea", "Battle_StyxSea", "Battle_Styx_High"),
+    field_piece("fallen-lords", "BattleMusic_FallenLords", "Battle_FallenLords", "Battle_FallenLords_High"),
+    field_piece("initial-descent", "BattleMusic_Limbo", "Battle_Limbo", "Battle_Limbo_High"),
+    field_piece("simple-machines", "BattleMusic_Crucible", "Battle_Crucible", "Battle_Crucible_High"),
+    boss_piece("daedalus", "BattleMusic_Daedalus", "BossBattle_Daedalus"),
+    boss_piece("talos", "BattleMusic_Talos", "BossBattle_Talos"),
+    boss_piece("fel", "BattleMusic_Fel", "BossBattle_Fel"),
+    boss_piece("archus", "BattleMusic_Archus", "BossBattle_Archus"),
+    boss_piece("seraph", "BattleMusic_Seraph", "BossBattle_Seraph"),
+    boss_piece("the-last-divinity", "BattleMusic_TLD", "BossBattle_TLD"),
 )
 
 
@@ -88,25 +122,25 @@ def main() -> int:
 
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
-    source = {
-        "assets": file_record(assets),
-        "resource": file_record(resource),
-        "localization": file_record(localization),
-    }
-    if cache_is_current(out, source):
+    tld = tld_installed(mt1)
+    pieces = active_pieces(tld)
+    if not tld:
+        print("The Last Divinity bundle is absent. Skipping BattleMusic_TLD.")
+    if cache_is_current(out, pieces, tld):
         print(f"Music cache is current at {out}")
         return 0
 
-    wanted = {layer.asset_name for piece in PIECES for layer in piece.layers}
+    wanted = {layer.asset_name for piece in pieces for layer in piece.layers}
     found = find_clips(assets, wanted)
     missing = sorted(wanted - set(found))
     if missing:
         print("MT1 audio clips not found: " + ", ".join(missing), file=sys.stderr)
         return 3
 
-    pieces = []
-    for piece in PIECES:
-        name = localized_name(localization, piece.music_id)
+    names = localization_blob(localization)
+    written = []
+    for piece in pieces:
+        name = localized_name(names, piece.music_id)
         layers = []
         for layer in piece.layers:
             info = fsb_info(found[layer.asset_name])
@@ -127,28 +161,44 @@ def main() -> int:
                 }
             )
             print(f"Wrote {dest} ({len(data)} bytes) from {layer.asset_name}")
-        loop = shared_loop(layers)
-        if any(layer["samples"] != layers[0]["samples"] or layer["sampleRate"] != layers[0]["sampleRate"] for layer in layers[1:]):
-            raise RuntimeError(f"{piece.music_id} layers do not share a length")
-        pieces.append(
-            {
-                "id": piece.piece_id,
-                "musicId": piece.music_id,
-                "name": name,
-                "sampleRate": layers[0]["sampleRate"],
-                "channels": layers[0]["channels"],
-                "samples": layers[0]["samples"],
-                "durationSeconds": layers[0]["samples"] / layers[0]["sampleRate"],
-                "loop": loop,
-                "layers": layers,
-            }
+        share_length = all(
+            layer["samples"] == layers[0]["samples"] and layer["sampleRate"] == layers[0]["sampleRate"] for layer in layers[1:]
         )
+        entry = {
+            "id": piece.piece_id,
+            "musicId": piece.music_id,
+            "trackId": piece.track_id,
+            "role": piece.role,
+            "name": name,
+            "highTransitionSeconds": piece.high_transition_seconds,
+            "layersShareLength": share_length,
+            "lengthDeltaSamples": max(layer["samples"] for layer in layers) - min(layer["samples"] for layer in layers),
+            "layers": layers,
+        }
+        if share_length:
+            entry["sampleRate"] = layers[0]["sampleRate"]
+            entry["channels"] = layers[0]["channels"]
+            entry["samples"] = layers[0]["samples"]
+            entry["durationSeconds"] = layers[0]["samples"] / layers[0]["sampleRate"]
+            entry["loop"] = layers[0]["loop"]
+        written.append(entry)
+        loop = layers[0]["loop"]
         print(
             f"{name}: loop {loop['startSeconds']:.3f}s to {loop['endSeconds']:.3f}s "
             f"({loop['startSample']} to {loop['endSample']} samples)"
         )
 
-    manifest = {"version": MANIFEST_VERSION, "mt1": str(mt1), "source": source, "pieces": pieces}
+    manifest = {
+        "version": MANIFEST_VERSION,
+        "tld": tld,
+        "mt1": str(mt1),
+        "source": {
+            "assets": file_record(assets),
+            "resource": file_record(resource),
+            "localization": file_record(localization),
+        },
+        "pieces": written,
+    }
     (out / MANIFEST_NAME).write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     print(f"Wrote {out / MANIFEST_NAME}")
     return 0
@@ -303,35 +353,67 @@ def loop_window(start_sample: int, end_sample: int, sample_rate: int) -> dict:
     }
 
 
-def shared_loop(layers: list[dict]) -> dict:
-    loops = [layer["loop"] for layer in layers]
-    if any(loop != loops[0] for loop in loops[1:]):
-        raise RuntimeError("Music layers do not share a loop window")
-    return loops[0]
+def tld_installed(mt1: Path) -> bool:
+    """True when the TLD Addressables directory contains a bundle.
+
+    Steam and non-Steam installs both keep that depot at this path. The check
+    does not consult Steam.
+    """
+    folder = mt1 / TLD_DIRECTORY
+    if not folder.is_dir():
+        return False
+    return any(path.is_file() and path.suffix.lower() == ".bundle" for path in folder.iterdir())
 
 
-def localized_name(resources_assets: Path, term: str) -> str:
-    """English name for an I2 localization term. MT1 stores English at index 0."""
+def active_pieces(tld: bool) -> tuple[Piece, ...]:
+    if tld:
+        return PIECES
+    return tuple(piece for piece in PIECES if piece.music_id != "BattleMusic_TLD")
+
+
+def localization_blob(resources_assets: Path) -> bytes:
     env = Environment(str(resources_assets))
-    key = term.encode("utf-8")
-    pattern = struct.pack("<i", len(key)) + key
     for obj in env.objects:
         if obj.type.name != "MonoBehaviour":
             continue
         raw = obj.get_raw_data()
-        index = raw.find(pattern)
-        if index < 0:
-            continue
-        _term, offset = read_string(raw, index)
-        _term_type, offset = read_i32(raw, offset)
-        _description, offset = read_string(raw, offset)
-        count, offset = read_i32(raw, offset)
-        if count < 1:
-            break
-        name, _offset = read_string(raw, offset)
+        if b"BattleMusic_Limbo" in raw:
+            return raw
+    raise RuntimeError("MT1 localization source has no music names")
+
+
+def localized_name(raw: bytes, music_id: str) -> str:
+    """English name for a music id. MT1 stores English at language index 0."""
+    for term in (f"{music_id}_Name", music_id):
+        name = read_term(raw, term)
         if name:
             return name
-    raise RuntimeError(f"No localized name for {term}")
+    raise RuntimeError(f"No localized name for {music_id}")
+
+
+def read_term(raw: bytes, term: str) -> str | None:
+    key = term.encode("utf-8")
+    pattern = struct.pack("<i", len(key)) + key
+    start = 0
+    while True:
+        index = raw.find(pattern, start)
+        if index < 0:
+            return None
+        start = index + 1
+        try:
+            found, offset = read_string(raw, index)
+            if found != term:
+                continue
+            _term_type, offset = read_i32(raw, offset)
+            _description, offset = read_string(raw, offset)
+            count, offset = read_i32(raw, offset)
+            if count < 1 or count > 16:
+                continue
+            name, _offset = read_string(raw, offset)
+        except (RuntimeError, UnicodeDecodeError, struct.error):
+            continue
+        if name:
+            return name
 
 
 def read_i32(data: bytes, offset: int) -> tuple[int, int]:
@@ -369,7 +451,13 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def cache_is_current(out: Path, source: dict) -> bool:
+def cache_is_current(out: Path, pieces: tuple[Piece, ...], tld: bool) -> bool:
+    """True when the expected wav files are already present.
+
+    Monster Train 1 is not receiving new builds, so source hashes are not
+    compared. A newly installed TLD bundle changes the expected set and is
+    extracted on the next run.
+    """
     manifest_path = out / MANIFEST_NAME
     if not manifest_path.is_file():
         return False
@@ -377,19 +465,20 @@ def cache_is_current(out: Path, source: dict) -> bool:
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     except json.JSONDecodeError:
         return False
-    if manifest.get("version") != MANIFEST_VERSION or manifest.get("source") != source:
+    if manifest.get("version") != MANIFEST_VERSION or manifest.get("tld") is not tld:
         return False
-    pieces = {item.get("id"): item for item in manifest.get("pieces", [])}
-    for piece in PIECES:
-        item = pieces.get(piece.piece_id)
-        if not item or "name" not in item or "loop" not in item:
+    recorded = {item.get("id"): item for item in manifest.get("pieces", [])}
+    if set(recorded) != {piece.piece_id for piece in pieces}:
+        return False
+    for piece in pieces:
+        item = recorded[piece.piece_id]
+        if item.get("trackId") != piece.track_id or item.get("role") != piece.role or "name" not in item:
             return False
         layers = {layer.get("id"): layer for layer in item.get("layers", [])}
+        if set(layers) != {layer.layer_id for layer in piece.layers}:
+            return False
         for layer in piece.layers:
-            recorded = layers.get(layer.layer_id)
-            if not recorded:
-                return False
-            file = out / recorded.get("file", "")
+            file = out / layers[layer.layer_id].get("file", "")
             if not file.is_file() or file.stat().st_size == 0:
                 return False
     return True
