@@ -69,6 +69,8 @@ internal static class BattleMusicPatches
 
         private static void Prefix(ref string trackNameOverride)
         {
+            if (!Plugin.BossMusics.Value)
+                return;
             if (string.IsNullOrEmpty(trackNameOverride))
                 return;
             if (!BossAlternates.TryGetValue(trackNameOverride, out string alternate))

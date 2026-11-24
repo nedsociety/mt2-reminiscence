@@ -1,0 +1,36 @@
+name: Publish Thunderstore
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag to publish, including the v prefix
+        required: true
+        type: string
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Download the release package
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="${{ inputs.tag }}"
+          version="${tag#v}"
+          gh release download "$tag" --repo "$GITHUB_REPOSITORY" --pattern "Reminiscence-${version}.zip"
+
+      - name: Publish
+        env:
+          TCLI_AUTH_TOKEN: ${{ secrets.TCLI_AUTH_TOKEN }}
+        run: |
+          tag="${{ inputs.tag }}"
+          version="${tag#v}"
+          dotnet tool install --global tcli
+          tcli publish --file "Reminiscence-${version}.zip"
